@@ -15,6 +15,8 @@ services:
       - "8000:8000"              # map host port 8000 to container port 8000
     volumes:
       - ./DemoAPI:/app           # mount the local DemoAPI directory to /app in the container
+    networks:
+      - web
     restart: unless-stopped
 
   duckdns:
@@ -32,7 +34,7 @@ services:
 
     
   caddy:
-    image: caddy:2.10.0
+    image: caddy
     restart: unless-stopped
     ports:
       - "80:80"
@@ -48,6 +50,7 @@ services:
 
 networks:
   web:
+
 
 volumes:
   caddy_data:
