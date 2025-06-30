@@ -1,0 +1,13 @@
+app.company {
+  route {
+    reverse_proxy /outpost.goauthentik.io/* http://authentik-server:9000
+
+    forward_auth http://authentik-server:9000 {
+      uri /outpost.goauthentik.io/auth/caddy
+      copy_headers ...
+      trusted_proxies private_ranges
+    }
+
+    reverse_proxy app:porta_app
+  }
+}

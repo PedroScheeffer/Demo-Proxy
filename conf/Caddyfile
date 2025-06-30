@@ -1,0 +1,3 @@
+demoucu.duckdns.org {
+  reverse_proxy demoapi:8000
+}

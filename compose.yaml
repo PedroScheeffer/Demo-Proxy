@@ -1,0 +1,56 @@
+# include: 
+#   - authentik.yaml
+
+services:
+  demoapi:
+    build:
+      context: ./DemoAPI
+      dockerfile: Dockerfile
+    container_name: demoapi
+    environment:
+      - TZ=America/Montevideo    # your timezone
+      - PORT=8000                # port to run the API on
+      - DEBUG=True               
+    ports:
+      - "8000:8000"              # map host port 8000 to container port 8000
+    volumes:
+      - ./DemoAPI:/app           # mount the local DemoAPI directory to /app in the container
+    restart: unless-stopped
+
+  duckdns:
+    image: linuxserver/duckdns:version-bdcb41e5
+    container_name: duckdns
+    environment:
+      - TZ=America/Montevideo
+      - SUBDOMAINS=demoucu
+      - TOKEN=${TOKEN_DUCKDNS}
+      - LOG_FILE=true
+      - UPDATE_IP=ipv4
+    env_file:
+      - .env
+    restart: unless-stopped
+
+    
+  caddy:
+    image: caddy:2.10.0
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./conf:/etc/caddy
+      - ./site:/srv
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - web
+
+networks:
+  web:
+
+volumes:
+  caddy_data:
+  caddy_config:
+
+
