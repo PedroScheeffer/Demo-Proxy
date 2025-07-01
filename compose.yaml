@@ -8,13 +8,13 @@ services:
       dockerfile: Dockerfile
     container_name: demoapi
     environment:
-      - TZ=America/Montevideo    # your timezone
-      - PORT=8000                # port to run the API on
+      - TZ=America/Montevideo   
+      - PORT=8000               
       - DEBUG=True               
     ports:
-      - "8000:8000"              # map host port 8000 to container port 8000
+      - "8000:8000"              
     volumes:
-      - ./DemoAPI:/app           # mount the local DemoAPI directory to /app in the container
+      - ./DemoAPI:/app         
     networks:
       - web
     restart: unless-stopped

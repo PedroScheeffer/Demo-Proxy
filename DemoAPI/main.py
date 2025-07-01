@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse
 app = FastAPI()
 
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 async def root():
     html_content = """
     <!DOCTYPE html>
@@ -14,11 +14,11 @@ async def root():
     </head>
     <body>
         <h1>Demo reverse Proxy</h1>
-        <p>🔄 A <strong>reverse proxy</strong> sits between clients 🧑‍💻 and servers 🖥️. It receives requests from clients, forwards them to the appropriate server, and then sends the server's response back to the client. This helps with security 🔒, load balancing ⚖️, and caching 🚀.</p>
+        <p>🔄 Un <strong>proxy inverso</strong> 🛡️ se 🧑‍💻 coloca 🏗️ entre 🧑‍💻 clientes 🤝 y 🖥️ servidores. Recibe 📥 las 📨 solicitudes 🧑‍💻, las 🔀 reenvía 🚚 al 🖥️ servidor adecuado, y luego 🔁 envía 📤 la respuesta 📨 del servidor 🖥️ de vuelta ⬅️ al cliente 🧑‍💻. Esto 🧰 ayuda 🆘 con 🔒 seguridad, ⚖️ balanceo de carga y 🚀 almacenamiento en caché.</p>
     </body>
     </html>
     """
-    return html_content
+    return HTMLResponse(content=html_content)
 
 
 
